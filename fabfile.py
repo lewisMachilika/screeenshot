@@ -55,6 +55,7 @@ def clone():
     
     #https://github.com/lewisMachilika/screeenshot.git
     
+    
     local("git init && git clone {0}".format(repo))
     
     repo_name=repo_name_func(repo)
