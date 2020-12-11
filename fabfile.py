@@ -13,7 +13,7 @@ def test():
 def commit():
 
     val=input(" Enter your commit :")
-    local("git add . && git commit -m '{0}'".format(val))
+    local("git add . && git commit -m \"{0}\"".format(val))
 
 def push():
     local("git push")
@@ -25,7 +25,7 @@ def prepare_deploy():
 
 def commit_push():
     val=input("CP Enter your commit :")
-    local("git add . && git commit -m \"{0}\" ".format(val))
-    local("git push")
+    local("git add . && git commit -m \"{0}\" && git push".format(val))
+    
 def directory():
   local('dir')
