@@ -18,19 +18,50 @@ git_watchers = [
 local("git fetch", watchers=git_watchers)
 '''
 import datetime
+
 now = datetime.datetime.now()
 
-os.rename("myfolder","myfolder{0}".format(now.strftime("-%Y-%m-%d-%H%M%S")))
+import zipfile
+
+def zipdir(path, ziph):
+    
+    for root, dirs, files in os.walk(path):
+        for file in files:
+            ziph.write(os.path.join(root, file))
+
+
 def test():
     local("./manage.py test my_app")
 
 def commit():
 
     val=input(" Enter your commit :")
+    
     local("git add . && git commit -m \"{0}\"".format(val))
+
+def clone():
+    
+    local("git init && git clone https://github.com/lewisMachilika/screeenshot.git")
+    
+    local("cd screeenshot && Rmdir /S .git && cd ../")
+    
+    bkp="screeenshot{0}".format(now.strftime("-%Y-%m-%d-%H%M%S"))
+    
+    os.rename("screeenshot",bkp)
+
+    zipf = zipfile.ZipFile('../{0}.zip'.format(bkp), 'w', zipfile.ZIP_DEFLATED)
+    
+    zipdir(bkp, zipf)
+    
+    zipf.close()
+
+    local("Rmdir /S {0}".format(bkp))
 
 def push():
     local("git push")
+
+def pull():
+    local("git pull")
 
 def prepare_deploy():
     #test()
