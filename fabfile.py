@@ -19,7 +19,8 @@ local("git fetch", watchers=git_watchers)
 '''
 import datetime
 now = datetime.datetime.now()
-os.rename("myfolder","myfolder{0}".format(now.strftime("%Y-%m-%d%H%M%S")))
+
+os.rename("myfolder","myfolder{0}".format(now.strftime("-%Y-%m-%d-%H%M%S")))
 def test():
     local("./manage.py test my_app")
 
@@ -37,8 +38,9 @@ def prepare_deploy():
     push()
 
 def commit_push():
-    val=input("CP Enter your commit :")
-    local("git add . && git commit -m \"{0}\" && git push".format(val))
+    name=input("Enter your full name :")
+    task=input("What are you doing")
+    local("git add . && git commit -m \"{0}\" && git push".format(name +' '+task+' '+ now.strftime("-%Y-%m-%d %H:%M:%S ")))
     
 def directory():
   local('dir')
